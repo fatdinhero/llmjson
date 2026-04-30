@@ -7,7 +7,7 @@ Constrained decoding on Apple Silicon via MLX. The model physically cannot produ
 ## Install
 
 ```bash
-pip install llmjson
+pip install jsongate
 ```
 
 Requires Python 3.9+ and Apple Silicon (M1/M2/M3/M4).
