@@ -262,8 +262,8 @@
 
   <section class="hero">
     <h1><span>llmjson</span></h1>
-    <p class="tagline">100% valid JSON from local LLMs. Zero retries. Zero post-processing. Constrained decoding on Apple Silicon.</p>
-    <div class="install-box" onclick="navigator.clipboard.writeText('pip install jsongate')" title="Click to copy">pip install jsongate</div>
+    <p class="tagline">Valid JSON from local LLMs. No server, no retries, 10x faster than Ollama. Constrained decoding on Apple Silicon.</p>
+    <div class="install-box" onclick="navigator.clipboard.writeText('pip install llmjson')" title="Click to copy">pip install llmjson</div>
   </section>
 
   <section class="stats">
@@ -334,49 +334,56 @@ print(result.is_valid) <span class="cmt"># True &mdash; always</span></code></pr
   </section>
 
   <section class="compare">
-    <h2>Why not just retry?</h2>
+    <h2>How does it compare?</h2>
     <table>
       <thead>
         <tr>
           <th>Approach</th>
           <th>100% valid</th>
-          <th>No retries</th>
+          <th>Speed</th>
+          <th>No server</th>
           <th>Local/private</th>
-          <th>Schema-aware</th>
         </tr>
       </thead>
       <tbody>
         <tr class="highlight-row">
           <td>llmjson</td>
           <td class="yes">Yes</td>
+          <td class="yes">~1-2s</td>
           <td class="yes">Yes</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <td>Ollama --format json</td>
+          <td class="yes">Yes</td>
+          <td class="partial">~10-25s</td>
+          <td class="no">No (daemon)</td>
+          <td class="yes">Yes</td>
+        </tr>
+        <tr>
+          <td>OpenAI Structured Outputs</td>
+          <td class="yes">Yes</td>
+          <td class="yes">~1-3s</td>
+          <td class="no">No (API)</td>
+          <td class="no">No</td>
+        </tr>
+        <tr>
+          <td>Outlines / Guidance</td>
+          <td class="yes">Yes</td>
+          <td class="yes">~1-3s</td>
           <td class="yes">Yes</td>
           <td class="yes">Yes</td>
         </tr>
         <tr>
           <td>Retry + parse</td>
           <td class="no">No</td>
-          <td class="no">No</td>
+          <td class="no">Varies</td>
           <td class="partial">Depends</td>
-          <td class="no">No</td>
-        </tr>
-        <tr>
-          <td>OpenAI JSON mode</td>
-          <td class="partial">Mostly</td>
-          <td class="yes">Yes</td>
-          <td class="no">No</td>
-          <td class="partial">Partial</td>
-        </tr>
-        <tr>
-          <td>Outlines / Guidance</td>
-          <td class="yes">Yes</td>
-          <td class="yes">Yes</td>
-          <td class="yes">Yes</td>
-          <td class="yes">Yes</td>
+          <td class="partial">Depends</td>
         </tr>
       </tbody>
     </table>
-    <p style="color: var(--text-muted); margin-top: 16px; font-size: 14px;">llmjson is purpose-built for Apple Silicon with MLX. Outlines and Guidance target CUDA/CPU. Pick the right tool for your hardware.</p>
+    <p style="color: var(--text-muted); margin-top: 16px; font-size: 14px;">llmjson is a Python library for Apple Silicon (MLX). No server process, no API keys. Outlines and Guidance target CUDA/CPU. Ollama works but runs 10-25x slower on the same hardware. Pick the right tool for your setup.</p>
   </section>
 
   <section class="compare" style="padding-top: 0; border-top: none;">
@@ -420,7 +427,7 @@ $ llmjson generate --model ... --schema ... --prompt ... --verbose
     <h2>Get started in 30 seconds</h2>
     <p>Requires Python 3.9+ and Apple Silicon (M1/M2/M3/M4).</p>
     <a href="https://github.com/fatdinhero/llmjson" class="btn">GitHub</a>
-    <a href="https://pypi.org/project/jsongate/" class="btn btn-secondary">PyPI</a>
+    <a href="https://pypi.org/project/llmjson/" class="btn btn-secondary">PyPI</a>
     <a href="blog/how-i-got-100-percent-valid-json.html" class="btn btn-secondary">Blog Post</a>
   </section>
 

@@ -274,22 +274,24 @@ print(result.is_valid)
 
 <p><strong>Token alignment.</strong> Most tokenizers split text into subword tokens that don't align perfectly with JSON structural characters. A string like <code>"name":</code> might be one token or four. The tracker handles this by processing decoded text character by character, but edge cases exist with unusual tokenizers.</p>
 
-<h2>Why local matters</h2>
+<p><strong>Ollama does this too.</strong> I ran the same 4 schemas through Ollama's <code>--format json</code> with Qwen2.5:14b. It scored 40/40. Ollama uses GBNF grammars to constrain output and it works. If you already use Ollama and don't care about speed, it's a fine choice. llmjson is 10-25x faster on the same hardware because it talks to MLX directly instead of going through a server.</p>
 
-<p>OpenAI's Structured Outputs mode is good. If you're using their API and you're fine sending your data to their servers, it might be all you need.</p>
+<h2>Why llmjson over Ollama?</h2>
 
-<p>But there are reasons to want local inference:</p>
+<p>Both guarantee valid JSON. The differences are practical:</p>
 
 <ul>
-<li><strong>Privacy:</strong> The data never leaves your machine. Medical records, financial data, proprietary content.</li>
-<li><strong>Cost:</strong> After the one-time model download, generation is free. No per-token charges.</li>
-<li><strong>Latency:</strong> No network round-trip. On an M3 Max, generation starts in milliseconds.</li>
-<li><strong>Control:</strong> You pick the model, the parameters, the schema. No API limits, no deprecation notices.</li>
+<li><strong>Speed:</strong> llmjson generates in ~1-2 seconds. Ollama takes 10-25 seconds for the same schema on the same Mac. Direct MLX access vs. HTTP intermediary.</li>
+<li><strong>No daemon:</strong> llmjson is a Python library. Import it, call it. No background server to manage.</li>
+<li><strong>Privacy:</strong> The data never leaves your process. No local network socket, no shared memory.</li>
+<li><strong>Logit access:</strong> You get the raw probability distribution. Useful if you're building something beyond basic JSON generation.</li>
 </ul>
+
+<p>If you need an HTTP API, use Ollama. If you want a library you can embed in your Python code with maximum speed, use llmjson.</p>
 
 <h2>How to try it</h2>
 
-<pre><code>pip install jsongate</code></pre>
+<pre><code>pip install llmjson</code></pre>
 
 <p>You'll need Python 3.9+ and an Apple Silicon Mac (M1 or later). The MLX dependencies install automatically.</p>
 
