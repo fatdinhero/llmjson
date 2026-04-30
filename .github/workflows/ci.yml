@@ -27,7 +27,7 @@ jobs:
 
       - name: Run unit tests (no MLX)
         run: |
-          python -m pytest tests/test_llmjson.py tests/test_schema_encoder.py tests/test_mrc.py tests/test_mrc_pipeline.py tests/test_adversarial.py tests/test_coverage_boost.py -v --tb=short
+          python -m pytest tests/ -v --tb=short
 
   lint:
     runs-on: ubuntu-latest
